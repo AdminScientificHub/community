@@ -6,7 +6,12 @@ type TProps = {
 }
 
 export const Button: FunctionComponent<TProps & Partial<TButtonStylesProps>> = ({ ...props }) => {
-  return <StyledContainer {...(props as TButtonStylesProps)} />
+  return <StyledContainer suppressHydrationWarning {...(props as TButtonStylesProps)} />
+}
+
+Button.defaultProps = {
+  variant: 'primary',
+  size: 'medium',
 }
 
 export type TButtonProps = TProps

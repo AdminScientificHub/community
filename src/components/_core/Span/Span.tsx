@@ -1,4 +1,3 @@
-import { TEXT_DEFAULT_PROPS } from '@src/utils'
 import React, { FunctionComponent } from 'react'
 import { StyledContainer, TSpanStylesProps } from './Span.styled'
 
@@ -10,6 +9,6 @@ export const Span: FunctionComponent<TProps & Partial<TSpanStylesProps>> = ({ ..
   return <StyledContainer {...(props as TSpanStylesProps)} />
 }
 
-Span.defaultProps = TEXT_DEFAULT_PROPS
+Span.defaultProps = {}
 
 export type TSpanProps = TProps

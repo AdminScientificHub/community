@@ -17,9 +17,13 @@ export const Link: FunctionComponent<TProps & Partial<TLinkStylesProps>> = ({
 }) => {
   return (
     <NextLink href={href} as={as} passHref>
-      <StyledContainer {...props} />
+      <StyledContainer {...(props as TLinkStylesProps)} />
     </NextLink>
   )
+}
+
+Link.defaultProps = {
+  variant: 'primary',
 }
 
 export type TLinkProps = TProps

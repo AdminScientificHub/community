@@ -1,14 +1,9 @@
 import { CSSObject } from '@emotion/react'
-import {
-  COLOR_TO_VALUE,
-  TColorTokenEnum,
-  TEXT_SIZE_TO_VALUE,
-  TEXT_WEIGHT_TO_VALUE,
-  TTextSizeTokenEnum,
-  TTextWeightTokenEnum,
-} from '.'
+import { TTheme } from '@src/providers'
+import { TColorTokenEnum, TTextSizeTokenEnum, TTextWeightTokenEnum } from '.'
 
 type TProps = {
+  theme: TTheme
   size: TTextSizeTokenEnum
   weight: TTextWeightTokenEnum
   textAlign: 'initial' | 'center' | 'right' | 'left'
@@ -21,11 +16,11 @@ const getEllipsisStyle = (ellipsis: TProps['ellipsis']): CSSObject => {
     return {}
   }
 
-  return { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
+  return { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }
 }
 
-const convertSizeTokenToStyle = (size: TProps['size']): CSSObject => {
-  const { fontSize, lineHeight } = TEXT_SIZE_TO_VALUE[size]
+const convertSizeTokenToStyle = (theme: TTheme, size: TProps['size']): CSSObject => {
+  const { fontSize, lineHeight } = theme.text.size[size]
 
   return {
     fontSize: `${fontSize}rem`,
@@ -34,6 +29,7 @@ const convertSizeTokenToStyle = (size: TProps['size']): CSSObject => {
 }
 
 export const getDefaultTextStyle = ({
+  theme,
   textAlign,
   color,
   weight,
@@ -42,14 +38,14 @@ export const getDefaultTextStyle = ({
 }: TProps): CSSObject => {
   return {
     textAlign,
-    color: COLOR_TO_VALUE[color],
-    weight: TEXT_WEIGHT_TO_VALUE[weight],
-    ...convertSizeTokenToStyle(size),
+    color: theme.color[color],
+    fontWeight: theme.text.weight[weight],
+    ...convertSizeTokenToStyle(theme, size),
     ...getEllipsisStyle(ellipsis),
   }
 }
 
-export const TEXT_DEFAULT_PROPS: TProps = {
+export const TEXT_DEFAULT_PROPS: Omit<TProps, 'theme'> = {
   ellipsis: false,
   weight: 'regular',
   textAlign: 'initial',

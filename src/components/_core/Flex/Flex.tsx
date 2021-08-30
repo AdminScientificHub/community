@@ -4,13 +4,15 @@ import { StyledContainer, TFlexStylesProps } from './Flex.styled'
 type TProps = {
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   forwardRef?: React.Ref<HTMLDivElement>
-}
+  tabIndex?: number
+  as?: 'footer' | 'header' | 'section'
+  wrap?: boolean
+} & Partial<Omit<TFlexStylesProps, '$wrap'>>
 
-export const Flex: FunctionComponent<TProps & Partial<TFlexStylesProps>> = ({
-  forwardRef,
-  ...props
-}) => {
-  return <StyledContainer ref={forwardRef} {...(props as TFlexStylesProps)} />
+export const Flex: FunctionComponent<TProps> = ({ forwardRef, wrap, ...props }) => {
+  return (
+    <StyledContainer {...(props as TFlexStylesProps)} $wrap={wrap as boolean} ref={forwardRef} />
+  )
 }
 
 Flex.defaultProps = {
@@ -21,6 +23,7 @@ Flex.defaultProps = {
   background: 'none',
   elevation: 'none',
   overflow: 'initial',
+  position: 'initial',
   maxWidth: 'initial',
   padding: {},
   margin: {},
@@ -29,6 +32,8 @@ Flex.defaultProps = {
     color: 'none',
     size: 'none',
   },
+  flex: true,
+  wrap: false,
 }
 
 export type TFlexProps = TProps

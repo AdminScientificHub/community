@@ -1,10 +1,22 @@
-export type TGapTokenEnum = 'none' | 'xxsmall' | 'xsmall' | 'medium' | 'large' | 'xlarge'
+export type TGapTokenEnum =
+  | 'none'
+  | 'xxsmall'
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
 
-export const GAP_TO_SIZE: { [key in TGapTokenEnum]: number } = {
-  none: 0,
-  xxsmall: 0.4,
-  xsmall: 0.8,
-  medium: 1.6,
-  large: 2.4,
-  xlarge: 3.2,
+export const GAP_TO_SIZE: { [key in TGapTokenEnum]: string } = {
+  none: '0',
+  xxsmall: '0.4rem',
+  xsmall: '0.8rem',
+  small: '1.2rem',
+  medium: '1.6rem',
+  large: '2.4rem',
+  xlarge: '3.2rem',
+  xxlarge: '4.8rem',
 }
+
+export const gap = GAP_TO_SIZE

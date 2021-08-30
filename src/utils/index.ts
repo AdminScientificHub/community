@@ -1,2 +1,6 @@
+export * from './getReadTime'
 export * from './libs'
+export * from './number'
+export * from './shuffleArray'
 export * from './styles'
+export * from './text'

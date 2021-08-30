@@ -1,32 +1,47 @@
 import styled, { CSSObject } from '@emotion/styled'
 import { rgba } from 'emotion-rgba'
 import {
-  COLOR_TO_VALUE,
-  GAP_TO_SIZE,
   TColorTokenEnum,
   TGapTokenEnum,
   TElevationTokenEnum,
-  ELEVATION_TO_VALUE,
-  TBorderTokenEnum,
+  TBorderRadiusTokenEnum,
+  TBorderSizeTokenEnum,
   TSpacingTokenEnum,
 } from '@src/utils'
 import { TFlexProps } from '.'
+import { TTheme } from '@src/providers'
+
+type TSpacing =
+  | {
+      horizontal?: TSpacingTokenEnum
+      vertical?: TSpacingTokenEnum
+      right?: TSpacingTokenEnum
+      left?: TSpacingTokenEnum
+      top?: TSpacingTokenEnum
+      bottom?: TSpacingTokenEnum
+    }
+  | TSpacingTokenEnum
 
 type TProps = {
   direction: 'column' | 'row'
   justify: 'initial' | 'end' | 'start' | 'center' | 'between'
   align: 'initial' | 'end' | 'start' | 'center'
   overflow: 'initial' | 'auto' | 'hidden'
+  position: 'initial' | 'relative'
+  $wrap: boolean
   gap: TGapTokenEnum
   elevation: TElevationTokenEnum
   background: TColorTokenEnum | { opacity: number; color: TColorTokenEnum }
-  margin: { horizontal?: TSpacingTokenEnum; vertical?: TSpacingTokenEnum }
-  padding: { horizontal?: TSpacingTokenEnum; vertical?: TSpacingTokenEnum }
+  margin: TSpacing
+  padding: TSpacing
+  flex: boolean
+  height: number
+  width: number
   maxWidth: 'initial' | number
   border: {
-    radius?: TBorderTokenEnum
-    color: TColorTokenEnum
-    size: TBorderTokenEnum
+    radius?: TBorderRadiusTokenEnum
+    color?: TColorTokenEnum
+    size?: TBorderSizeTokenEnum
   }
 }
 
@@ -45,30 +60,16 @@ const convertAlignTokenToStyle = (align: TProps['justify'] | TProps['align']) =>
   }
 }
 
-const convertGapTokenToStyle = (dir: TProps['direction'], gap: TProps['gap']): CSSObject => {
-  const size = `${GAP_TO_SIZE[gap]}rem`
-  const marginBottom = dir === 'column' ? size : 0
-  const marginRight = dir === 'row' ? size : 0
+const convertGapTokenToStyle = (theme: TTheme, gap: TProps['gap']): CSSObject => ({
+  gap: theme.gap[gap],
+})
 
-  return {
-    '& > *': {
-      marginBottom,
-      marginRight,
-
-      '&:last-child': {
-        marginBottom: 0,
-        marginRight: 0,
-      },
-    },
-  }
-}
-
-const convertColorTokenToStyle = (background: TProps['background']) => {
+const convertColorTokenToStyle = (theme: TTheme, background: TProps['background']) => {
   if (typeof background === 'string') {
-    return COLOR_TO_VALUE[background]
+    return theme.color[background]
   }
 
-  return rgba(COLOR_TO_VALUE[background.color], background.opacity)
+  return rgba(theme.color[background.color], background.opacity)
 }
 
 const convertMaxWidthToStyle = (maxWidth: TProps['maxWidth']) => {
@@ -79,37 +80,52 @@ const convertMaxWidthToStyle = (maxWidth: TProps['maxWidth']) => {
   return `${maxWidth}rem`
 }
 
-const convertBorderToStyle = (border: TProps['border']): CSSObject => {
+const convertBorderToStyle = (theme: TTheme, border: TProps['border']): CSSObject => {
+  const borderRadius =
+    border.radius && border.radius !== 'none' ? theme.border.radius[border.radius] : null
+
   return {
-    ...(border.radius && {
-      borderRadius: `${border.radius}rem`,
-      border: `${border.size} solid ${border.color}`,
+    ...(borderRadius && {
+      borderRadius,
     }),
+    ...(border.size &&
+      border.size !== 'none' && {
+        border: `${theme.border.size[border.size]} solid ${theme.color[border.color || 'border']}`,
+      }),
   }
 }
 
-const convertSpacingToStyle = ({ vertical, horizontal }: TProps['padding'] | TProps['margin']) => {
-  const hor = `${horizontal}rem`
-  const ver = `${vertical}rem`
+const convertSpacingToStyle = (theme: TTheme, spacing: TProps['padding'] | TProps['margin']) => {
+  if (typeof spacing === 'string') {
+    return theme.spacing[spacing]
+  }
 
-  if (horizontal && vertical) {
+  const hor = spacing.horizontal ? theme.spacing[spacing.horizontal] : null
+  const ver = spacing.vertical ? theme.spacing[spacing.vertical] : null
+
+  if (ver && hor) {
     return `${ver} ${hor}`
   }
 
-  if (horizontal) {
+  if (hor) {
     return `0 ${hor}`
   }
 
-  if (vertical) {
-    return `${hor} 0`
+  if (ver) {
+    return `${ver} 0`
   }
 
-  return 'initial'
+  return `${spacing.top ? theme.spacing[spacing.top] : '0'} ${
+    spacing.right ? theme.spacing[spacing.right] : '0'
+  } ${spacing.bottom ? theme.spacing[spacing.bottom] : '0'} ${
+    spacing.left ? theme.spacing[spacing.left] : '0'
+  }`
 }
 
 export const StyledContainer = styled('div')<TProps & TFlexProps>(
   ({
-    direction,
+    theme,
+    direction: flexDirection,
     justify,
     align,
     gap,
@@ -118,24 +134,41 @@ export const StyledContainer = styled('div')<TProps & TFlexProps>(
     overflow,
     maxWidth,
     border,
-    padding,
-    margin,
+    padding: paddingValue,
+    margin: marginValue,
     onClick,
+    height,
+    width,
+    flex,
+    $wrap,
   }) => {
+    const padding = convertSpacingToStyle(theme, paddingValue)
+    const margin = convertSpacingToStyle(theme, marginValue)
+
     return {
       overflow,
+      flexDirection,
+      flex: flex ? '1 1' : '0 0 auto',
       display: 'flex',
-      flexDirection: direction,
-      boxShadow: ELEVATION_TO_VALUE[elevation],
-      margin: convertSpacingToStyle(margin),
-      padding: convertSpacingToStyle(padding),
+      boxShadow: theme.elevation[elevation],
       maxWidth: convertMaxWidthToStyle(maxWidth),
       alignItems: convertAlignTokenToStyle(align),
       justifyContent: convertAlignTokenToStyle(justify),
-      backgroundColor: convertColorTokenToStyle(background),
-      ...convertBorderToStyle(border),
-      ...convertGapTokenToStyle(direction, gap),
+      backgroundColor: convertColorTokenToStyle(theme, background),
+      ...convertBorderToStyle(theme, border),
+      ...convertGapTokenToStyle(theme, gap),
+      ...($wrap && {
+        flexWrap: 'wrap',
+      }),
       ...(onClick && { cursor: 'pointer' }),
+      ...(height && {
+        height: `${height}rem`,
+      }),
+      ...(width && {
+        width: `${width}rem`,
+      }),
+      ...(margin && { margin }),
+      ...(padding && { padding }),
     }
   },
 )

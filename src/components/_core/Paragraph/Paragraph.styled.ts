@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { getDefaultTextStyle, TDefaultTextProps } from '@src/utils/styles/Text'
+import { getDefaultTextStyle, TDefaultTextProps } from '@src/utils'
 
 type TProps = {} & TDefaultTextProps
 

@@ -1,13 +1,11 @@
 import React from 'react'
-
 import { Page } from '@src/utils'
+import { PublicationsLayout } from '@src/components/_layouts'
 
-const Home: Page = () => {
-  return <div>Home</div>
-}
+import { HomeView } from '@src/components/_views'
 
-Home.Layout = ({ children }) => {
-  return <>{children}</>
-}
+const Home: Page = () => <HomeView />
+
+Home.Layout = PublicationsLayout
 
 export default Home

@@ -1,4 +1,4 @@
-export type TTextWeightTokenEnum = 'light' | 'regular' | 'semi-bold' | 'bold'
+export type TTextWeightTokenEnum = 'regular' | 'semi-bold' | 'bold'
 export type TTextSizeTokenEnum =
   | 'none'
   | 'xxsmall'
@@ -7,11 +7,12 @@ export type TTextSizeTokenEnum =
   | 'medium'
   | 'large'
   | 'xlarge'
+  | 'xxlarge'
+  | 'xxxlarge'
 
 export const TEXT_WEIGHT_TO_VALUE: { [key in TTextWeightTokenEnum]: number } = {
-  light: 300,
   regular: 400,
-  'semi-bold': 500,
+  'semi-bold': 600,
   bold: 700,
 }
 
@@ -25,4 +26,11 @@ export const TEXT_SIZE_TO_VALUE: {
   medium: { fontSize: 1.6, lineHeight: 2 },
   large: { fontSize: 1.6, lineHeight: 2.4 },
   xlarge: { fontSize: 2.1, lineHeight: 3.2 },
+  xxlarge: { fontSize: 2.8, lineHeight: 3.8 },
+  xxxlarge: { fontSize: 4.8, lineHeight: 6 },
+}
+
+export const text = {
+  weight: TEXT_WEIGHT_TO_VALUE,
+  size: TEXT_SIZE_TO_VALUE,
 }
