@@ -1,6 +1,6 @@
 import { CSSObject } from '@emotion/react'
 import { TTheme } from '@src/providers'
-import { TColorTokenEnum, TTextSizeTokenEnum, TTextWeightTokenEnum } from './'
+import { TColorTokenEnum, TTextSizeTokenEnum, TTextWeightTokenEnum } from '.'
 
 type TProps = {
   theme: TTheme
@@ -57,11 +57,4 @@ export const TEXT_DEFAULT_PROPS: Omit<TProps, 'theme'> = {
   color: 'text',
 }
 
-export type TDefaultTextProps = {
-  theme: TTheme
-  size: TTextSizeTokenEnum
-  weight: TTextWeightTokenEnum
-  textAlign: 'initial' | 'center' | 'right' | 'left'
-  color: TColorTokenEnum
-  ellipsis?: boolean
-}
+export type TDefaultTextProps = TProps
