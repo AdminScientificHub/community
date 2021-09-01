@@ -1,6 +1,6 @@
 import { CSSObject } from '@emotion/react'
 import { TTheme } from '@src/providers'
-import { TColorTokenEnum, TTextSizeTokenEnum, TTextWeightTokenEnum } from '.'
+import { TColorTokenEnum, TTextSizeTokenEnum, TTextWeightTokenEnum } from './'
 
 type TProps = {
   theme: TTheme
