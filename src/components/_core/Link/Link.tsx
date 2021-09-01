@@ -22,8 +22,6 @@ export const Link: FunctionComponent<TProps & Partial<TLinkStylesProps>> = ({
   )
 }
 
-Link.defaultProps = {
-  variant: 'primary',
-}
+Link.defaultProps = {}
 
 export type TLinkProps = TProps

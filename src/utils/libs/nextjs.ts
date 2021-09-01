@@ -23,6 +23,7 @@ type TEnv = {
   FIREBASE_MESSAGING_SENDER_ID: string
   FIREBASE_APP_ID: string
   FIREBASE_MEASUREMENT_ID: string
+  COMMUNITY_URL: string
 }
 
 export const env: TEnv = publicRuntimeConfig

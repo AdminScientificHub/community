@@ -13,22 +13,21 @@ export const Footer: FunctionComponent<TProps> = () => {
   return (
     <Flex
       flex={false}
-      padding={{ vertical: isMobile || isSmallTablet ? 'large' : 'huge' }}
+      padding={{ vertical: isMobile || isSmallTablet ? 'large' : 'xxlarge' }}
       as="footer"
       background={{ color: 'dark-background', opacity: 0.9 }}
       margin={{ top: 'huge' }}
-      align={isMobile ? 'initial' : 'center'}
       direction="column"
+      align="start"
     >
       <Flex maxWidth={128} direction="column" gap="xlarge">
         {!isMobile && (
           <>
-            <Flex direction={isTablet || isSmallTablet ? 'column' : 'row'} gap="xlarge">
+            {/* <Flex direction={isTablet || isSmallTablet ? 'column' : 'row'} gap="xlarge">
               <Flex direction="column" gap="xsmall">
                 <Paragraph size="xlarge" color="light-text" weight="semi-bold">
                   Learn more.
                 </Paragraph>
-                {/* TODO */}
                 <Paragraph size="small" color="light-text">
                   Medium is an open platform where 170 million readers come to find insightful and
                   dynamic thinking. Here, expert and undiscovered voices alike dive into the heart
@@ -39,7 +38,6 @@ export const Footer: FunctionComponent<TProps> = () => {
                 <Paragraph size="xlarge" color="light-text" weight="semi-bold">
                   Make ScientificHub yours.
                 </Paragraph>
-                {/* TODO */}
                 <Paragraph size="small" color="light-text">
                   Follow the writers, publications, and topics that matter to you, and you’ll see
                   them on your homepage and in your inbox.
@@ -49,14 +47,13 @@ export const Footer: FunctionComponent<TProps> = () => {
                 <Paragraph size="xlarge" color="light-text" weight="semi-bold">
                   Share your work with the world
                 </Paragraph>
-                {/* TODO */}
                 <Paragraph size="small" color="light-text">
                   If you have a story to tell, knowledge to share, or a perspective to offer —
                   welcome home. It’s easy and free to post your thinking on any topic.
                 </Paragraph>
               </Flex>
             </Flex>
-            <Divider />
+            <Divider /> */}
           </>
         )}
 
@@ -64,25 +61,24 @@ export const Footer: FunctionComponent<TProps> = () => {
           direction={isMobile ? 'column' : 'row'}
           align={isMobile ? 'initial' : 'center'}
           justify="between"
-          gap={isMobile ? 'small' : 'none'}
+          gap={isMobile ? 'small' : 'xlarge'}
         >
           <Link href="/">
             <Icon icon={LogoWhiteIcon} />
           </Link>
-          <Flex direction="row" gap="small" flex={false}>
-            {/* TODO */}
+          {/* <Flex direction="row" gap="small" flex={false}>
             <Link href="/" variant="footer-white">
               Help
             </Link>
-            {/* TODO */}
+
             <Link href="/" variant="footer-white">
               Contact Us
             </Link>
-            {/* TODO */}
+
             <Link href="/" variant="footer-white">
               About
             </Link>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Flex>
     </Flex>

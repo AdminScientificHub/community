@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
 
-import { border, color, elevation, gap, spacing, text, icon } from '@src/utils'
+import { border, color, elevation, gap, spacing, text, icon, breakpoint } from '@src/utils'
 
-const theme = {
+export const theme = {
   gap,
   color,
   border,
@@ -11,6 +11,7 @@ const theme = {
   spacing,
   text,
   icon,
+  breakpoint,
 }
 
 export type TTheme = typeof theme

@@ -36,19 +36,25 @@ export const PublicationLayoutSidebar: FunctionComponent<TProps> = () => {
         align="start"
       >
         <Heading variant="h3">Write on Scientifichub</Heading>
-        <Flex direction="column" gap="small">
+        {/* <Flex direction="column" gap="small">
           <Link href="/">New writer FAQ</Link>
           <Link href="/">Expert writing advice</Link>
-        </Flex>
-        <Button variant="primary" radius="huge">
-          Start Writing
-        </Button>
+        </Flex> */}
+        <Link target="_blank" href="https://app.scientifichub.io/">
+          <Button variant="primary" radius="huge">
+            Start Writing
+          </Button>
+        </Link>
       </Flex>
       <Flex flex={false} direction="column" gap="large">
         <Heading variant="h3">Document type</Heading>
         <Flex direction="row" gap="xsmall" wrap>
           {allPublicationTypes.map(publicationType => (
-            <Link key={publicationType.value} href={`/type/${publicationType.url}`}>
+            <Link
+              variant="primary"
+              key={publicationType.value}
+              href={`/type/${publicationType.url}`}
+            >
               <Button variant="secondary" radius="huge">
                 {publicationType.label}
               </Button>
@@ -65,7 +71,7 @@ export const PublicationLayoutSidebar: FunctionComponent<TProps> = () => {
         <Heading variant="h3">Field of study</Heading>
         <Flex direction="row" gap="xsmall" wrap>
           {allPublicationFields.map(field => (
-            <Link key={field.value} href={`/field/${field.url}`}>
+            <Link variant="primary" key={field.value} href={`/field/${field.url}`}>
               <Button variant="secondary" radius="huge">
                 {field.label}
               </Button>
@@ -78,7 +84,7 @@ export const PublicationLayoutSidebar: FunctionComponent<TProps> = () => {
           </Link>
         )}
       </Flex>
-      <Divider />
+      {/* <Divider />
       <Flex flex={false} direction="row" gap="large">
         <Link variant="footer" href="/">
           Help
@@ -89,7 +95,7 @@ export const PublicationLayoutSidebar: FunctionComponent<TProps> = () => {
         <Link variant="footer" href="/">
           Contact Us
         </Link>
-      </Flex>
+      </Flex> */}
     </StyledContainer>
   )
 }

@@ -7,5 +7,6 @@ export const StyledContainer = styled(Flex)(({ theme }) => {
     top: 0,
     marginTop: `-${theme.spacing.xlarge}`,
     paddingTop: theme.spacing.xlarge,
+    paddingBottom: theme.spacing.xlarge,
   }
 })

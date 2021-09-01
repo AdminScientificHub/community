@@ -66,6 +66,10 @@ export type TPublication = {
   type: TPublicationType
 }
 
+export type TPublicationStats = {
+  reads: number
+}
+
 export type TFullDataItem<T> = {
   value: T
   label: string

@@ -47,7 +47,6 @@ export const FieldView: FunctionComponent<TProps> = () => {
     const selectedField = getFieldFromName(fieldName)
 
     if (!selectedField) {
-      // TODO : Redirect to 404
       return { field: null, otherTopics: [] }
     }
 
@@ -59,7 +58,7 @@ export const FieldView: FunctionComponent<TProps> = () => {
       field: selectedField,
       otherTopics: topics,
     }
-  }, [router.query])
+  }, [router])
 
   const { results } = useAlgoliaSearch<TPublication>('publications', {
     // TODO: CHANGE LABEL TO VALUE
@@ -85,6 +84,24 @@ export const FieldView: FunctionComponent<TProps> = () => {
     ])
   }, [field, otherTopics, results, setDescription, setSections, setTitle])
 
+  const algoliaFilters = useMemo(() => {
+    const filters = ['status:PUBLISHED']
+
+    if (field) {
+      filters.push(`fields.value: ${field.label}`)
+    }
+
+    if (results.length) {
+      results.forEach(res => filters.push(`id:-${res.id}`))
+    }
+
+    if (mostPopularPublication) {
+      filters.push(`id:-${mostPopularPublication.id}`)
+    }
+
+    return filters.join(' AND ')
+  }, [field, mostPopularPublication, results])
+
   if (!field) {
     return <></>
   }
@@ -95,14 +112,14 @@ export const FieldView: FunctionComponent<TProps> = () => {
         updateMostPopularPublication={setMostPopularPublication}
         field={field}
       />
-      <AlgoliaInstantSearch
-        indexName="publications"
-        filters={`status:PUBLISHED AND fields.value: ${field.label} AND ${results
-          .map(res => `id:-${res.id}`)
-          .join(' AND ')}`}
-        component={LatestPublication}
-        infiniteScroll
-      />
+      {mostPopularPublication && (
+        <AlgoliaInstantSearch
+          indexName="publications"
+          filters={algoliaFilters}
+          component={LatestPublication}
+          infiniteScroll
+        />
+      )}
     </Flex>
   )
 }

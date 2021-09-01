@@ -17,6 +17,7 @@ import {
   PUBLICATION_FIELD_FULL_DATA,
   PUBLICATION_TYPE_FULL_DATA,
 } from '@src/components/publication/constants'
+import { formatQueryParams } from '@src/utils'
 
 type TProps = {
   exitActiveHeader: () => void
@@ -76,21 +77,13 @@ export const DefaultHeaderSearch: FunctionComponent<TProps> = ({ exitActiveHeade
 
     exitActiveHeader()
 
-    if (query) {
-      router.push(
-        `/search?q=${encodeURI(query.toLocaleLowerCase())}${
-          formattedField ? `&field=${formattedField}` : ''
-        }${formattedType ? `&type=${formattedType}` : ''}`,
-      )
-      return
-    }
-
-    if (formattedField) {
-      router.push(`/search?field=${formattedField}${type ? `&type=${formattedType}` : ''}`)
-      return
-    }
-
-    router.push(`/search?type=${formattedType}`)
+    router.push(
+      formatQueryParams('/search', [
+        { query: 'q', value: encodeURI(query.toLocaleLowerCase()) },
+        { query: 'field', value: formattedField },
+        { query: 'type', value: formattedType },
+      ]),
+    )
   }
 
   const focusNextField = () => {

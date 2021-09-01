@@ -1,1 +1,5 @@
+export * from './capitalizeFirstLetter'
 export * from './formatDate'
+export * from './formatQueryParams'
+export * from './formatToPlurial'
+export * from './searchText'

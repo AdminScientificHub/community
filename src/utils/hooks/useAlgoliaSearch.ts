@@ -12,13 +12,15 @@ type TProps = {
 
 type TRes<T> = {
   results: T[]
-  loading: boolean
+  isLoading: boolean
+  isFirstCall: boolean
 }
 
 type TAlgoliaIndexEnum = 'publications'
 
 export function useAlgoliaSearch<T>(index: TAlgoliaIndexEnum, params?: TProps): TRes<T> {
-  const [loading, setLoading] = useState(false)
+  const [isFirstCall, setIsFirstCall] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<T[]>([])
 
   const algolia = useMemo(() => {
@@ -38,9 +40,10 @@ export function useAlgoliaSearch<T>(index: TAlgoliaIndexEnum, params?: TProps): 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateResults = useCallback(
     debounce((currentQuery, facetFilters) => {
-      search(currentQuery, facetFilters).then(({ hits }) => {
+      search(currentQuery, facetFilters).then(({ hits, ...props }) => {
         setResults(hits as any)
-        setLoading(false)
+        setIsFirstCall(false)
+        setIsLoading(false)
       })
     }, 500),
     [],
@@ -49,7 +52,7 @@ export function useAlgoliaSearch<T>(index: TAlgoliaIndexEnum, params?: TProps): 
   useEffect(() => {
     if (params?.query?.length === 0 && results.length > 0) {
       setResults([])
-      setLoading(false)
+      setIsLoading(false)
     }
   }, [params?.query?.length, results.length])
 
@@ -62,10 +65,10 @@ export function useAlgoliaSearch<T>(index: TAlgoliaIndexEnum, params?: TProps): 
         ? params?.shouldLoad
         : true
     ) {
-      setLoading(true)
+      setIsLoading(true)
       updateResults(params?.query, params?.facetFilters)
     } else {
-      setLoading(false)
+      setIsLoading(false)
     }
     // HACK to handle array in dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,6 +76,7 @@ export function useAlgoliaSearch<T>(index: TAlgoliaIndexEnum, params?: TProps): 
 
   return {
     results,
-    loading,
+    isLoading,
+    isFirstCall,
   }
 }

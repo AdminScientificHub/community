@@ -1,11 +1,16 @@
 import styled, { CSSObject } from '@emotion/styled'
 import { TTheme } from '@src/providers'
+import { getDefaultTextStyle, TDefaultTextProps } from '@src/utils'
 
 type TProps = {
-  variant: 'primary' | 'secondary' | 'footer' | 'footer-white'
-}
+  variant: 'primary' | 'secondary' | 'footer' | 'footer-white' | 'no-styles'
+} & TDefaultTextProps
 
-const convertVariantToStyles = (theme: TTheme, variant: TProps['variant']): CSSObject => {
+const convertVariantToStyles = (
+  theme: TTheme,
+  variant: TProps['variant'],
+  props: Omit<TDefaultTextProps, 'theme'>,
+): CSSObject => {
   switch (variant) {
     case 'primary':
       return {
@@ -31,15 +36,22 @@ const convertVariantToStyles = (theme: TTheme, variant: TProps['variant']): CSSO
         lineHeight: theme.text.size.small.lineHeight,
       }
     }
+    case 'no-styles': {
+      return {
+        ...getDefaultTextStyle({ theme, ...props }),
+      }
+    }
   }
 }
 
-export const StyledContainer = styled('a')<TProps>(({ variant, theme }) => {
+export const StyledContainer = styled('a')<TProps>(({ variant, theme, ...props }) => {
   return {
-    ...convertVariantToStyles(theme, variant),
-    fontSize: '1.4rem',
-    lineHeight: '1.8rem',
-    textDecoration: 'none',
+    ...convertVariantToStyles(theme, variant, props),
+    ...(variant !== 'no-styles' && {
+      fontSize: '1.4rem',
+      lineHeight: '1.8rem',
+      textDecoration: 'none',
+    }),
   }
 })
 

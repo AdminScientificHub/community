@@ -7,7 +7,9 @@ type TProps = {}
 export const HeaderNav: FunctionComponent<TProps> = () => {
   return (
     <Flex flex={false}>
-      <StyledLink href="/">Write</StyledLink>
+      <StyledLink variant="primary" target="_blank" href="https://app.scientifichub.io/">
+        Write
+      </StyledLink>
     </Flex>
   )
 }

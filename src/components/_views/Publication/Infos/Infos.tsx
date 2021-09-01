@@ -28,7 +28,7 @@ export const PublicationInfos: FunctionComponent<TProps> = ({ publication, mainA
             <Paragraph size="small">{getReadTime(publication.content)}min read</Paragraph>
           </Flex>
         </Flex>
-        <SocialMedias />
+        <SocialMedias {...publication} />
       </Flex>
     </>
   )

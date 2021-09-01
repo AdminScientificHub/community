@@ -18,6 +18,10 @@ export const RelatedPublication: FunctionComponent<TProps> = ({ publication }) =
     hitsPerPage: 3,
   })
 
+  if (!results.length) {
+    return <></>
+  }
+
   return (
     <Flex direction="column" gap="xlarge" maxWidth={128}>
       <Flex direction="column" gap="xsmall">

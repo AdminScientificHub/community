@@ -5,8 +5,10 @@ export const StyledContainer = styled(Flex)(({ theme }) => {
   return {
     transition: 'all .2s ease',
 
-    '&:hover': {
-      boxShadow: theme.elevation.xsmall,
-    },
+    opacity: 0.8,
+
+    // '&:hover': {
+    //   boxShadow: theme.elevation.xsmall,
+    // },
   }
 })

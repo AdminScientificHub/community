@@ -14,10 +14,16 @@ export const CategorySidebar: FunctionComponent<TProps> = () => {
   return (
     <StyledContainer maxWidth={28} direction="column" gap="xxlarge">
       <Flex direction="column" gap="xxsmall" flex={false}>
-        <Heading variant="h2" color="dark-text">
-          {title}
-        </Heading>
-        <Paragraph size="small">{description}</Paragraph>
+        {(title || description) && (
+          <>
+            {title && (
+              <Heading variant="h2" color="dark-text">
+                {title}
+              </Heading>
+            )}
+            {description && <Paragraph size="small">{description}</Paragraph>}
+          </>
+        )}
       </Flex>
       {sections.map(section => {
         if (section.type === 'nav' && section.items?.length) {
@@ -31,7 +37,7 @@ export const CategorySidebar: FunctionComponent<TProps> = () => {
               </Flex>
               <Flex direction="column" gap="small" flex={false}>
                 {section.items.map(item => (
-                  <Link key={item.label} href={item.url}>
+                  <Link variant="primary" key={item.label} href={item.url}>
                     <Heading variant="h3">{item.label}</Heading>
                   </Link>
                 ))}

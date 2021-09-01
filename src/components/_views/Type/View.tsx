@@ -56,7 +56,7 @@ export const TypeView: FunctionComponent<TProps> = () => {
       type: selectedType,
       otherTypes: PUBLICATION_TYPE_FULL_DATA.filter(t => t.url !== typeName),
     }
-  }, [router.query.typeName])
+  }, [router])
 
   const { results } = useAlgoliaSearch<TPublication>('publications', {
     facetFilters: [
@@ -81,6 +81,24 @@ export const TypeView: FunctionComponent<TProps> = () => {
     ])
   }, [otherTypes, results, setDescription, setSections, setTitle, type])
 
+  const algoliaFilters = useMemo(() => {
+    const filters = ['status:PUBLISHED']
+
+    if (type) {
+      filters.push(`type: ${type.value}`)
+    }
+
+    if (results.length) {
+      results.forEach(res => filters.push(`id:-${res.id}`))
+    }
+
+    if (mostPopularPublication) {
+      filters.push(`id:-${mostPopularPublication.id}`)
+    }
+
+    return filters.join(' AND ')
+  }, [mostPopularPublication, results, type])
+
   if (!type) {
     return <></>
   }
@@ -91,14 +109,14 @@ export const TypeView: FunctionComponent<TProps> = () => {
         updateMostPopularPublication={setMostPopularPublication}
         type={type}
       />
-      <AlgoliaInstantSearch
-        indexName="publications"
-        filters={`status:PUBLISHED AND type: ${type.value}${
-          results.length ? ' AND ' + results.map(res => `id:-${res.id}`).join(' AND ') : ''
-        } `}
-        component={LatestPublication}
-        infiniteScroll
-      />
+      {mostPopularPublication && (
+        <AlgoliaInstantSearch
+          indexName="publications"
+          filters={algoliaFilters}
+          component={LatestPublication}
+          infiniteScroll
+        />
+      )}
     </Flex>
   )
 }

@@ -8,6 +8,7 @@ import { Thumbnail } from '@src/components/_common'
 import { useScreenSize } from '@src/utils/hooks'
 import { getPublicationMainAuthor } from '@src/services'
 import { getReadTime } from '@src/utils'
+import { getPublicationUrl } from '../..'
 
 type TProps = TPublication & {
   direction?: 'vertical' | 'horizontal'
@@ -63,7 +64,7 @@ export const PublicationItem: FunctionComponent<TProps> = ({
   }, [isDesktop, isMobile, isSmallTablet, isTablet])
 
   const publicationUrl = useMemo(() => {
-    return `/publication/${encodeURI(title.replaceAll(' ', '-'))}-${id}`
+    return `/${getPublicationUrl(title, id)}`
   }, [id, title])
 
   const formattedPublishDate = useMemo(() => {
@@ -109,7 +110,7 @@ export const PublicationItem: FunctionComponent<TProps> = ({
       <Flex direction="column" gap="medium">
         <Flex direction="column" gap="small" flex={false}>
           <Link href={publicationUrl}>
-            <Image src={coverUrl} alt="" height={37.5} />
+            <Image src={coverUrl} alt="" height={isDesktop ? 37.5 : 20} />
           </Link>
           <Link href={publicationUrl}>
             <Flex direction="column" gap="xsmall">

@@ -20,6 +20,10 @@ const getEllipsisStyle = (ellipsis: TProps['ellipsis']): CSSObject => {
 }
 
 const convertSizeTokenToStyle = (theme: TTheme, size: TProps['size']): CSSObject => {
+  if (!size) {
+    return {}
+  }
+
   const { fontSize, lineHeight } = theme.text.size[size]
 
   return {

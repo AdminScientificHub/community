@@ -1,4 +1,4 @@
-import { PublicationItem } from '@src/components/publication'
+import { EmptyPublicationSection, PublicationItem } from '@src/components/publication'
 import { TFullDataItem, TPublication, TPublicationField } from '@src/components/publication/_types'
 import { useAlgoliaSearch } from '@src/utils/hooks'
 import React, { FunctionComponent, useEffect } from 'react'
@@ -12,7 +12,7 @@ export const MostPopularPublication: FunctionComponent<TProps> = ({
   field,
   updateMostPopularPublication,
 }) => {
-  const { results } = useAlgoliaSearch<TPublication>('publications', {
+  const { results, isLoading, isFirstCall } = useAlgoliaSearch<TPublication>('publications', {
     // TODO: CHANGE LABEL TO VALUE
     facetFilters: [`fields.value: ${field.label}`, 'status: PUBLISHED'],
     hitsPerPage: 1,
@@ -26,8 +26,12 @@ export const MostPopularPublication: FunctionComponent<TProps> = ({
     updateMostPopularPublication(results[0])
   }, [results, updateMostPopularPublication])
 
-  if (!results.length) {
+  if ((isLoading && !results.length) || isFirstCall) {
     return <></>
+  }
+
+  if (!results.length) {
+    return <EmptyPublicationSection />
   }
 
   return <PublicationItem variant="hero" {...results[0]} />

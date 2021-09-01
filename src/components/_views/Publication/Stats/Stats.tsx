@@ -1,25 +1,25 @@
 import { Flex, Icon, Paragraph } from '@src/components/_core'
 import React, { FunctionComponent } from 'react'
 
-import FireworkIcon from '@src/assets/icons/firework.svg'
+// import FireworkIcon from '@src/assets/icons/firework.svg'
 import ViewIcon from '@src/assets/icons/view.svg'
 import { getNumberWithSpaces } from '@src/utils'
+import { TPublicationStats } from '@src/components/publication/_types'
 
-type TProps = {}
+type TProps = TPublicationStats
 
-export const PublicationViewStats: FunctionComponent<TProps> = () => {
+export const PublicationViewStats: FunctionComponent<TProps> = ({ reads }) => {
   return (
     <Flex direction="row" gap="large">
       <Flex direction="row" gap="xxsmall" align="center" flex={false}>
         <Icon icon={ViewIcon} />
-        {/* TODO */}
-        <Paragraph size="small">{getNumberWithSpaces(4254)}</Paragraph>
+        <Paragraph size="small">{getNumberWithSpaces(reads)}</Paragraph>
       </Flex>
-      <Flex direction="row" gap="xxsmall" align="center" flex={false}>
+      {/** TODO */}
+      {/* <Flex direction="row" gap="xxsmall" align="center" flex={false}>
         <Icon icon={FireworkIcon} />
-        {/* TODO */}
         <Paragraph size="small">{getNumberWithSpaces(189)}</Paragraph>
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }

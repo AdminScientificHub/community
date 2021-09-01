@@ -21,23 +21,20 @@ export const SearchTypeInput: FunctionComponent<TProps> = ({
     <Controller
       control={control}
       name="type"
-      render={({ field: { value, onChange } }) => {
-        console.log('value', value)
-        return (
-          <DefaultHeaderSearchInput
-            value={value}
-            onChange={onChange}
-            placeholder="Paper, article ..."
-            label="Type"
-            name="type"
-            isActive={focusedInput === 'type'}
-            changeFocusedInput={changeFocusedInput}
-            focusNextField={focusNextField}
-            items={PUBLICATION_TYPE_FULL_DATA}
-            onItemSelected={item => onChange(item)}
-          />
-        )
-      }}
+      render={({ field: { value, onChange } }) => (
+        <DefaultHeaderSearchInput
+          value={value}
+          onChange={onChange}
+          placeholder="Paper, article ..."
+          label="Type"
+          name="type"
+          isActive={focusedInput === 'type'}
+          changeFocusedInput={changeFocusedInput}
+          focusNextField={focusNextField}
+          items={PUBLICATION_TYPE_FULL_DATA}
+          onItemSelected={item => onChange(item)}
+        />
+      )}
     />
   )
 }
