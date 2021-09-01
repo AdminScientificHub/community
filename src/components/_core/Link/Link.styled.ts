@@ -1,6 +1,6 @@
 import styled, { CSSObject } from '@emotion/styled'
 import { TTheme } from '@src/providers'
-import { getDefaultTextStyle, TDefaultTextProps } from '@src/utils/styles/text'
+import { getDefaultTextStyle, TDefaultTextProps } from '@src/utils'
 
 type TProps = {
   variant: 'primary' | 'secondary' | 'footer' | 'footer-white' | 'no-styles'
