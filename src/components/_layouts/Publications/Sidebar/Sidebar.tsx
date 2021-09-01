@@ -7,7 +7,7 @@ import {
   TPublicationStatus,
   TPublicationType,
 } from '@src/components/publication/_types'
-import { Divider } from '@src/components/_common'
+
 import { Flex, Link, Heading, Button } from '@src/components/_core'
 import { shuffleArray } from '@src/utils'
 

@@ -4,8 +4,8 @@ import { Page } from '@src/utils'
 import { DefaultLayoutWithoutFooter } from '@src/components/_layouts/_common'
 import { TypesView } from '@src/components/_views'
 
-const Home: Page = () => <TypesView />
+const TypesPage: Page = () => <TypesView />
 
-Home.Layout = DefaultLayoutWithoutFooter
+TypesPage.Layout = DefaultLayoutWithoutFooter
 
-export default Home
+export default TypesPage

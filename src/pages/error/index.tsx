@@ -1,11 +1,11 @@
 import React from 'react'
 import { Page } from '@src/utils'
 
-import { NotFoundView } from '@src/components/_views/404/View'
+import { NotFoundView } from '@src/components/_views'
 import { DefaultLayout } from '@src/components/_layouts/_common'
 
-const FieldPage: Page = () => <NotFoundView />
+const ErrorPage: Page = () => <NotFoundView />
 
-FieldPage.Layout = DefaultLayout
+ErrorPage.Layout = DefaultLayout
 
-export default FieldPage
+export default ErrorPage

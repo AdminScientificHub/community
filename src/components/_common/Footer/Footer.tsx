@@ -1,6 +1,5 @@
-import { Flex, Icon, Link, Paragraph } from '@src/components/_core'
+import { Flex, Icon, Link } from '@src/components/_core'
 import React, { FunctionComponent } from 'react'
-import { Divider } from '..'
 
 import LogoWhiteIcon from '@src/assets/icons/logo-white.svg'
 import { useScreenSize } from '@src/utils/hooks'
@@ -8,7 +7,7 @@ import { useScreenSize } from '@src/utils/hooks'
 type TProps = {}
 
 export const Footer: FunctionComponent<TProps> = () => {
-  const { isMobile, isTablet, isSmallTablet } = useScreenSize()
+  const { isMobile, isSmallTablet } = useScreenSize()
 
   return (
     <Flex

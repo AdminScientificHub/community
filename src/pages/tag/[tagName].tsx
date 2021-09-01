@@ -3,8 +3,8 @@ import { Page } from '@src/utils'
 import { CategoryLayout } from '@src/components/_layouts'
 import { TagView } from '@src/components/_views'
 
-const TypePage: Page = () => <TagView />
+const TagPage: Page = () => <TagView />
 
-TypePage.Layout = CategoryLayout
+TagPage.Layout = CategoryLayout
 
-export default TypePage
+export default TagPage
